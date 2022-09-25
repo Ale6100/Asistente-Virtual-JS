@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) Google Analytics-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YELJ6NJS61"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YELJ6NJS61');
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://img.icons8.com/nolan/64/robot-2.png">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Asistente Virtual</title>
+</head>
+<body>
+    <div class="notas">
+        <p>Asistente no terminado. Haga click <a href="https://asistentevirtual.netlify.app" target="_blank">aquí</a> para ver la última versión</p>
+        <p>Si estás usando el código asegúrate de ejecutar este archivo en un servidor, como Live Server</p>
+    </div>
+    
+
+    <h1>Asistente virtual con JS vanilla</h1>
+    
+    <div>
+        <button id="btnStartRecord">Iniciar asistente</button>
+        <button id="btnStopRecord">Terminar</button>
+    </div>
+   
+    <div>
+        <p>Historial:</p>
+        <textarea id="historial" cols="50" rows="10"></textarea>
+    </div>
+    
+    <div>
+        <h2>Ayuda:</h2>
+        <h3>Todos los pedidos deben iniciar con el nombre del asistente (actualmente se llama "Alexa")</h3>
+        <p>Algunas palabras clave: (la mayoría tiene alguna variante)</p>
+        
+        <div class="ayuda">
+            <div>
+                <p class="negrita">Palabras clave</p>
+                <p class="negrita">Ejemplos</p>
+                <p class="negrita">Descripción</p>
+            </div>
+            <div>
+                <p>estás ahí</p>
+                <p>"Alexa, ¿estás ahí?"</p>
+                <p></p>
+            </div>
+            <div>
+                <p>basta</p>
+                <p>"Alexa, basta</p>
+                <p>Apaga el programa. Tarda un par de segundos</p>
+            </div>
+            <div>
+                <p>hora</p>
+                <p>"Alexa, qué hora es?"</p>
+                <p></p>
+            </div>
+            <div>
+                <p>fecha</p>
+                <p>"Alexa, qué fecha es hoy?"</p>
+                <p></p>
+            </div>
+            <div>
+                <p>gracias</p>
+                <p>"Alexa, gracias"</p>
+                <p></p>
+            </div>
+            <div>
+                <p>abr</p>
+                <p>"Alexa, abrí google"</p>
+                <p>Sólo funciona en sitios preseleccionado</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
