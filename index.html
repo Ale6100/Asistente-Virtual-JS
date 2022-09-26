@@ -16,69 +16,51 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>Asistente Virtual</title>
 </head>
-<body>
-    <div class="notas">
-        <p>Asistente no terminado. Haga click <a href="https://asistentevirtual.netlify.app" target="_blank">aquí</a> para ver la última versión</p>
-        <p>Si estás usando el código asegúrate de ejecutar este archivo en un servidor, como Live Server</p>
-    </div>
-    
+<body>    
+    <p class="noTerminado">Proyecto no terminado</p>
 
-    <h1>Asistente virtual con JS vanilla</h1>
+    <h1>Asistente virtual con JS</h1>
     
-    <div>
-        <button id="btnStartRecord">Iniciar asistente</button>
-        <button id="btnStopRecord">Terminar</button>
+    <div class="botones">
+        <button id="btnStart">Iniciar asistente</button>
+        <button id="btnStop">Terminar</button>
+        <button id="btnDelete">Borrar historial</button>
+        <button id="btnSource"> <a href="https://github.com/Ale6100/Asistente-Virtual-JS.git" target="_blank">Ver código fuente</a> </button>
     </div>
    
     <div>
-        <p>Historial:</p>
-        <textarea id="historial" cols="50" rows="10"></textarea>
+        <p class="phistorial">Historial:</p>
+        <textarea id="historial" placeholder='Haz click en "Iniciar asistente"!' readonly="readonly"></textarea>
     </div>
     
-    <div>
-        <h2>Ayuda:</h2>
-        <h3>Todos los pedidos deben iniciar con el nombre del asistente (actualmente se llama "Alexa")</h3>
-        <p>Algunas palabras clave: (la mayoría tiene alguna variante)</p>
+    <div class="divAyuda">
+        <p class="tips">Tips:</p>
+        <p class="negrita">Todos los pedidos deben iniciar con el nombre del asistente (actualmente se llama "Ok" por simplicidad)</h3>
+        <p class="negrita">Algunas palabras clave: (la mayoría tiene alguna variante)</p>
         
-        <div class="ayuda">
-            <div>
-                <p class="negrita">Palabras clave</p>
-                <p class="negrita">Ejemplos</p>
-                <p class="negrita">Descripción</p>
-            </div>
-            <div>
-                <p>estás ahí</p>
-                <p>"Alexa, ¿estás ahí?"</p>
-                <p></p>
-            </div>
-            <div>
-                <p>basta</p>
-                <p>"Alexa, basta</p>
-                <p>Apaga el programa. Tarda un par de segundos</p>
-            </div>
-            <div>
-                <p>hora</p>
-                <p>"Alexa, qué hora es?"</p>
-                <p></p>
-            </div>
-            <div>
-                <p>fecha</p>
-                <p>"Alexa, qué fecha es hoy?"</p>
-                <p></p>
-            </div>
-            <div>
-                <p>gracias</p>
-                <p>"Alexa, gracias"</p>
-                <p></p>
-            </div>
-            <div>
-                <p>abr</p>
-                <p>"Alexa, abrí google"</p>
-                <p>Sólo funciona en sitios preseleccionado</p>
-            </div>
-        </div>
+        <div id="ayuda"></div>
     </div>
 
-    <script src="./js/script.js"></script>
+    <div class="aclaracion">
+        <p>(<span class="negrita">*</span>) Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas</p>
+        <p>(<span class="negrita">**</span>) Por ahora sólo funciona en sitios preseleccionados </p>
+    </div>
+
+    <div class="notas">
+        <p class="negrita">Si no funciona, considera que:</p>
+        <p>1) El asistente está pensado para ser utilizado en computadoras con windows</p>
+        <p>2) No funciona en todos los navegadores</p>
+        <p>3) Asegúrate de haberle dado el permiso a tu navegador para utilizar tu micrófono</p>
+    </div>
+
+    <div class="notas">
+        <p class="negrita">Si descargaste el código fuente y estás intentando utilizarlo: </p>
+        <p>1) asegúrate de ejecutarlo desde un servidor, como Live Server</p>
+        <p>2) <a href="https://asistentevirtual.netlify.app" target="_blank">aquí</a> está la última versión disponible si la necesitas</p>
+    </div>
+
+    <p id="creditos">Desarrollado por <a href="https://www.linkedin.com/in/alejandro-portaluppi/" target="_blank">Alejandro P</a></p>
+
+    <script type="module" src="./js/script.js"></script>
 </body>
 </html>

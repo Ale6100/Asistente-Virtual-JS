@@ -1,108 +1,110 @@
-const btnStartRecord = document.getElementById("btnStartRecord");
-const btnStopRecord = document.getElementById("btnStopRecord");
+"use strict";
+
+import { datosTabla, buscar, horaActual, abrir , eliminarDeRec } from "./utils.js";
+
+const btnStart = document.getElementById("btnStart");
+const btnStop = document.getElementById("btnStop");
 const historial = document.getElementById("historial");
+const btnDelete = document.getElementById("btnDelete")
+
+const ayuda = document.getElementById("ayuda")
+datosTabla.forEach( (dato, i) => {
+    (i == 0)
+    ?   ayuda.innerHTML +=
+        `
+        <div>
+            <p class="negrita">${dato.palabraClave}</p>
+            <p class="negrita">${dato.ejemplos}</p>
+            <p class="negrita">${dato.descripcion}</p>
+            <p class="negrita">${dato.pedidoPreciso}</p>
+        </div>
+        `
+    :   ayuda.innerHTML +=
+        `
+        <div>
+            <p>${dato.palabraClave}</p>
+            <p>${dato.ejemplos}</p>
+            <p>${dato.descripcion}</p>
+            <p>${dato.pedidoPreciso}</p>
+        </div>
+        `
+})
+
+////////// Configuraciones iniciales
 
 let recognition
 try {
     recognition = new webkitSpeechRecognition(); // Sirve para el reconocimiento del texto
 } catch (e) {
-    document.body.innerHTML = `<p>Lo sentimos, su navegador no es compatible con el asistente. Puedes conocer los navegadores compatibles <a href="https://developer.mozilla.org/es/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#compatibilidad_de_navegadores_2" target="_blank">aqui</a></p>`
+    document.body.innerHTML = `<h1>Lo sentimos, su navegador no es compatible con el asistente. Puedes conocer los navegadores compatibles <a href="https://developer.mozilla.org/es/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#compatibilidad_de_navegadores_2" target="_blank">aqui</a></h1>`
     console.error(e)
 }
 recognition.lang = "es-ES";
 recognition.continuous = true; // Si graba continuamente o no
 recognition.interimResults = false; // Nos devuelve información cuando nos quedamos callados
 
-let abortado = false
-recognition.onend = () => { // Este evento se lanza cuando se deja de escuchar el micrófono
+let abortado
+recognition.onend = () => { // Este evento se ejecuta cuando se deja de escuchar el micrófono
     if (abortado == true) {
         console.log("El micrófono dejó de escuchar")
-    } else { // Si nosotros no le dijimos que se apague, vuelve a empezar
+    } else { // Si nosotros no pedimos que se apague, vuelve a empezar
         recognition.start();
     }
 }
 
-recognition.onerror = (event) => { // Muestra esto en consola en caso de que haya habido un error
+recognition.onerror = (event) => { // Muestra esto en consola en caso de que se produzca un error en el reconocedor
     console.log(event.error)
     if (event.error == "aborted") { // Si le dijimos que se apague, esto se cambia a true y no vuelve a empezar
         abortado = true
     }
 }
 
-btnStartRecord.addEventListener("click", () => { // Inicia el reconocimiento de voz
-    recognition.start();
-    abortado = false
-})
-
-btnStopRecord.addEventListener("click", () => { // Detiene el reconocimiento de voz
-    print_and_talk("Cerrando")
-    recognition.abort();
-})
-
 recognition.onnomatch = () => {
     console.log('No se reconoció ninguna palabra')
 }
 
-const horaActual = () => {
-    return new Date().toLocaleTimeString()
-}
+btnStart.addEventListener("click", () => { // Inicia el reconocimiento de voz
+    recognition.start();
+    abortado = false
+})
+
+btnStop.addEventListener("click", () => { // Detiene el reconocimiento de voz
+    historial.value += "\n\n"
+    print_and_talk("Asistente apagado")
+    recognition.abort();
+})
+
+btnDelete.addEventListener("click", () => {
+    historial.value = ""
+    k = 1
+})
 
 const limpiarTexto = (rec) => {
-    rec = rec.slice(rec.indexOf(nombre)) // Reefino el texto. Me quedo únicamente con el texto que inicia con el nombre del asistente
-    historial.value += `\n${horaActual()} - ${k}) Dijiste: ${rec}`
-    rec = rec.replace(nombre + ', ', '').replace(nombre + ' ', '') // Quito el nombre del pedido
-    if (rec[rec.length-1] == "." || rec[rec.length-1] == "?") { // Elimina los símbolos al final del texto
+    rec = rec.slice(rec.indexOf(nombre)) // Reefino el texto. Me quedo únicamente con la parte del texto que inicia con el nombre del asistente
+    if (k==1) {
+        historial.value += `${horaActual()} - ${k}) Dijiste: ${rec}\n`
+    } else {
+        historial.value += `\n\n${horaActual()} - ${k}) Dijiste: ${rec}\n`
+    }
+    rec = rec.toLowerCase().replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll(",", "").replaceAll("?", "").replaceAll("¿", "") // Coloco el texto en minúsculas, quito las tildes, las comas y los signos de pregunta 
+    rec = eliminarDeRec(rec, nombre.toLowerCase()) // Quito el nombre del asistente del pedido
+    if (rec[rec.length-1] == ".") { // Elimina el punto final
         rec = rec.slice(0, rec.length-1)
     }
-    rec = rec.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').toLowerCase()  // Quita las tildes y coloca todo en minúsculas
     return rec
 }
 
-const print_and_talk = (text) => {
-    const speech = new SpeechSynthesisUtterance()
-    speech.text = text; // Para que tome el texto pasado por parámetro
-    speech.volume = 1; // Volumen entre 0 y 1
-    speech.rate = 1; // Velocidad del habla
-    speech.pitch = 1;  // Tono de voz
-    window.speechSynthesis.speak(speech) // Le decimos que hable
-    console.log(text)
-    historial.value += `\n${horaActual()} - ${nombre} dijo: ${text}` 
-}
+////////// Configuración de pedidos
 
-const abrir = (rec) => { // Abre alguno de los sitios web guardados en el objeto "direcciones"
-    let direccionEncontrada = false
-    for (let direccion in direcciones) {
-        if (rec.includes(direccion)) {
-            print_and_talk(`Abriendo ${direccion}`)
-            window.open(direcciones[direccion])
-            direccionEncontrada = true
-            break
-        }
-    }
-    if (direccionEncontrada == false) {
-        print_and_talk("Dirección no encontrada")
-    }
-}
-
-///////////////////////////////////
-
-const nombre = "Alexa" // Nombre del asistente
+const nombre = "Ok" // Nombre del asistente (sin tildes)
 let k = 1
-const direcciones = {
-    whatsapp : "https://web.whatsapp.com",
-    steam : "https://store.steampowered.com",
-    facebook : "https://www.facebook.com",
-    youtube : "https://www.youtube.com",
-    twitch : "https://www.twitch.tv",
-    google : "https://www.google.com.ar",
-}
+let inicioCronometro = null
 
 recognition.onresult = (event) => { // Ejecuta esta función cuando hayamos recibido algo a traves del micrófono
     const results = event.results; // Acá se recibe la información
     let rec = results[results.length-1][0].transcript; // Este es el el texto que recibe el micrófono
-    console.log("----------\nTexto original: " + rec)
-    //texto.value += rec;
-    if (!rec.includes(nombre)) {
+    console.log("----------\nTexto interpretado: " + rec)
+    if (!rec.toLowerCase().includes(nombre.toLowerCase())) {
         console.log("No se encontró el nombre")
     } else {
         rec = limpiarTexto(rec)
@@ -113,21 +115,45 @@ recognition.onresult = (event) => { // Ejecuta esta función cuando hayamos reci
 }
 
 const pedidos = (rec) => { 
-    try {        
-        if (false) {
+    try {
+        if (rec.includes("cancela")) {
+            print_and_talk("Ok, cancelo el pedido")
 
-        } else if (pedidoGenerico(rec)) { // Si hacemos un "pedido genérico" cortamos con este if ya que va a buscar el pedido en esta nueva función
-            undefined
+        } else if (pedidoPreciso(rec)) { // Considero dos tipos de pedidos distintos. Si hacemos un "pedido preciso", esta función ejecuta el pedido solicitado y devuelve true
+            null
+
+        } else if (pedidoGenerico(rec)) {
+            null
+
+        } else if (rec == "") { // Devuelve esto si sólo decimos el nombre del asistente
+            print_and_talk("¿Qué pasa?")
+
+        } else {
+            print_and_talk("No te entendí")
         }
-    } catch (e) {
+    } catch (e) { // Si hay un error imprevisto lo muestra
         print_and_talk("Error desconocido")
         console.error(e)
     }
 }
 
-const pedidoGenerico = (rec) => {
+// Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas
+const pedidoPreciso = (rec) => {
     let res = true
-    if (rec.includes("estas") && rec.includes("ahi")) {
+    if (rec.includes("buscar")) {
+        buscar(rec) ? print_and_talk("Hecho") : print_and_talk("Dirección no encontrada")
+
+    } else if (false) { // Próximamente
+
+    } else {
+        res = false
+    }
+    return res
+}
+
+const pedidoGenerico = (rec) => { // La función va a devolver true si el if se corta antes de llegar al else. Esto quiere decir que se ejecutó un "pedido generico"
+    let res = true
+    if ((rec.includes("estas") || rec.includes("seguis") || rec.includes("continuas")) && (rec.includes("ahi") || rec.includes("aca"))) { // Abarca casos comoo: estas ahi / seguis ahi / estas por ahi / seguis por ahi
         print_and_talk("Estoy aquí")
 
     } else if (rec.includes("basta") || rec.includes("apaga")) {
@@ -143,11 +169,58 @@ const pedidoGenerico = (rec) => {
     } else if (rec.includes("gracias")) {
         print_and_talk("De nada")
 
-    } else if (rec.includes("abr")) {
-        abrir(rec)
+    } else if (rec.includes("abr") || rec.includes("anda a") || rec.includes("ir a")) {
+        abrir(rec) ? print_and_talk("Hecho") : print_and_talk("Dirección no encontrada")
+
+    } else if (rec.includes("como te llamas") || rec.includes("cual es tu nombre")) {
+        print_and_talk(`Me llamo ${nombre}`)
+
+    } else if (rec.includes("cronometro")) {
+        ejecutarCronometro(rec)
+
+    } else if (false) { // Próximamente
 
     } else {
-        rec = false
+        res = false
     }
     return res
+}
+
+////////// Funciones que se utilizan arriba
+
+const print_and_talk = (text) => {
+    const speech = new SpeechSynthesisUtterance()
+    speech.text = text; // Para que tome el texto pasado por parámetro
+    speech.volume = 1; // Volumen entre 0 y 1
+    speech.rate = 1; // Velocidad del habla
+    speech.pitch = 1;  // Tono de voz
+    window.speechSynthesis.speak(speech) // Le decimos que hable
+    console.log(`${nombre} dijo: ${text}`)
+    historial.value += `${horaActual()} - ${nombre} dijo: ${text}`
+    historial.scrollTop = historial.scrollHeight
+}
+
+const ejecutarCronometro = (rec) => {
+    if (rec.includes("inicia") || rec.includes("comenza") || rec.includes("comienza")) {
+        if (inicioCronometro == null) {
+            print_and_talk("Cronómetro iniciado")
+            inicioCronometro = new Date() // Momento en el tiempo en el que inició el cronómetro
+        } else {
+            print_and_talk("Ya hay un cronómetro iniciado, no puedes comenzar otro")
+        }
+    
+    } else if (rec.includes("detene") || rec.includes("para") || rec.includes("corta")) {
+        if (inicioCronometro != null) {
+            let milisegundos = new Date() - inicioCronometro
+            let minutosRedondeados = Math.round((milisegundos/60000 + Number.EPSILON) * 100)/100
+            print_and_talk(`El cronómetro contabilizó ${minutosRedondeados.toString().replaceAll(".", ",")} minutos`)
+            inicioCronometro = null // Vuelve a colocar el tiempo inicial en su estado original
+        } else {
+            print_and_talk("No puedes detener un cronómetro que no ha sido iniciado")
+        }
+    } else if (rec == "cronometro") {
+        print_and_talk("Para usar el cronómetro debes especificar si quieres iniciarlo o detenerlo")
+    } else {
+        print_and_talk("No te entendí")
+    }
 }

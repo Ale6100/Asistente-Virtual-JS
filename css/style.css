@@ -2,33 +2,164 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html {
+    font-size: 16px;
 }
 
 body {
     margin: 10px;
 }
 
-.notas {
+.negrita {
+    font-weight: bold;
+}
+
+.noTerminado {
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+}
+
+h1 {
+    text-align: center;
+}
+
+.botones {
+    margin: 10px 0px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.botones button {
+    padding: 5px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.botones button:active {
+    outline: 1px solid rgb(0, 0, 0);
+}
+
+#btnStart {
+    background-color: rgb(150, 255, 150);
+}
+
+#btnStart:hover {
+    background-color: rgb(180, 255, 180);
+}
+
+#btnStart:active {
+    background-color: rgb(120, 255, 120);
+}
+
+#btnStop {
+    background-color: rgb(255, 150, 150);
+}
+
+#btnStop:hover {
+    background-color: rgb(255, 180, 180);
+}
+
+#btnStop:active {
+    background-color: rgb(255, 120, 120);
+}
+
+#btnDelete {
+    background-color: rgb(200, 200, 200);
+}
+
+#btnDelete:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+#btnDelete:active {
+    background-color: rgb(170, 170, 170);
+}
+
+#btnSource {
+    background-color: rgb(150, 150, 255);
+}
+
+#btnSource:hover {
+    background-color: rgb(180, 180, 255);
+}
+
+#btnSource:active {
+    background-color: rgb(120, 120, 255);
+}
+
+#btnSource a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.phistorial, .tips {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#historial {
+    padding: 1px 5px;
+    width: 100%;
+    height: 200px;
+    font-size: 1.1rem;
+}
+
+.divAyuda {
+    margin: 10px 0px;
+}
+
+#ayuda {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+#ayuda div {
+    display: flex;
+    text-align: center;
+}
+
+#ayuda div p {
+    padding: 3px;
+    min-height: 20px;
+    width: 100%;
+    border: 1px solid rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aclaracion {
     padding: 5px;
     border: 1px solid rgb(0, 0, 0);
 }
 
-.ayuda {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.ayuda div {
-    display: flex;
-    
-}
-
-.ayuda div p {
+.notas {
+    margin-top: 10px;
+    padding: 5px;
     border: 1px solid rgb(0, 0, 0);
-    width: 310px;
 }
 
-.negrita {
-    font-weight: bold;
+#creditos {
+    position: fixed;
+    right: 2vw;
+    bottom: 1vh;
+    transition: transform 0.5s;
+}
+
+#creditos:hover {
+    transform: scale(1.1);
+}
+
+#creditos a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
 }
