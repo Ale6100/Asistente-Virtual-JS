@@ -1,5 +1,15 @@
 "use strict";
 
+const cambiarEstado = (estado, condicion) => {
+    if (condicion == "ON") {
+        estado.style.color = "rgb(0, 255, 0)"
+        estado.innerText = "ON"
+    } else {
+        estado.style.color = "rgb(255, 0, 0)"
+        estado.innerText = "OFF"
+    }
+}
+
 const datosTabla = [ // Datos para colocar en la tabla del html
     {
         palabraClave : "Palabras clave",
@@ -50,9 +60,9 @@ const datosTabla = [ // Datos para colocar en la tabla del html
         pedidoPreciso : "No"
     },
     {
-        palabraClave : 'abr<span class="negrita">**</span>',
+        palabraClave : 'abrí<span class="negrita">**</span>',
         ejemplos : '"Ok, abrí google"',
-        descripcion : "",
+        descripcion : "Abre el sitio web solicitado",
         pedidoPreciso : "No"
     },
     {
@@ -80,6 +90,7 @@ const direcciones = { // Se usa en las funciones abrir() y en buscar()
     libre : ["MercadoLibre", "https://www.mercadolibre.com.ar/", "https://listado.mercadolibre.com.ar/"],
     linkedin : ["LinKedIn", "https://www.linkedin.com/", "https://www.linkedin.com/search/results/all/?keywords="],
     github : ["GitHub", "https://github.com/", "https://github.com/search?q="],
+    wikipedia : ["Wikipedia", "https://es.wikipedia.org/", "https://es.wikipedia.org/wiki/"],
     whatsapp : ["WhatsApp Web", "https://web.whatsapp.com/"],
     netflix : ["Netflix", "https://www.netflix.com/"],
     disney : ["Disney", "https://www.disneyplus.com/"],
@@ -131,4 +142,4 @@ const eliminarDeRec = (rec, frase) => { // Elimina "frase" de "rec". Ejemplo: Su
     return espacioFiltrado.join(" ") // "yo juan"
 }
 
-export { datosTabla, buscar, horaActual, abrir , eliminarDeRec }
+export { cambiarEstado, datosTabla, buscar, horaActual, abrir , eliminarDeRec }

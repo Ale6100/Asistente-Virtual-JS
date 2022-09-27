@@ -108,26 +108,39 @@ h1 {
 #historial {
     padding: 1px 5px;
     width: 100%;
-    height: 200px;
+    height: 34vh;
     font-size: 1.1rem;
 }
 
-.divAyuda {
+#divEstado {
+    font-size: 1.1rem;
+}
+
+#divEstado p {
+    font-weight: bold;
+}
+
+.divPalabrasClave {
     margin: 10px 0px;
 }
 
-#ayuda {
+.palabrasClave {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#tablaPalabrasClave {
     margin-top: 5px;
     display: flex;
     flex-direction: column;
 }
 
-#ayuda div {
+#tablaPalabrasClave div {
     display: flex;
     text-align: center;
 }
 
-#ayuda div p {
+#tablaPalabrasClave div p {
     padding: 3px;
     min-height: 20px;
     width: 100%;
@@ -135,6 +148,10 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.divAyuda {
+    margin: 10px 0px;
 }
 
 .aclaracion {

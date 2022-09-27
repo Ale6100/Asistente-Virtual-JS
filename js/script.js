@@ -1,16 +1,19 @@
 "use strict";
 
-import { datosTabla, buscar, horaActual, abrir , eliminarDeRec } from "./utils.js";
+import { cambiarEstado, datosTabla, buscar, horaActual, abrir , eliminarDeRec } from "./utils.js";
 
 const btnStart = document.getElementById("btnStart");
 const btnStop = document.getElementById("btnStop");
 const historial = document.getElementById("historial");
 const btnDelete = document.getElementById("btnDelete")
 
-const ayuda = document.getElementById("ayuda")
+const estado = document.getElementById("divEstado").children[0].children[0]
+cambiarEstado(estado, "OFF") // Le decimos al cartel que el asistente está apagado
+
+const tablaPalabrasClave = document.getElementById("tablaPalabrasClave")
 datosTabla.forEach( (dato, i) => {
     (i == 0)
-    ?   ayuda.innerHTML +=
+    ?   tablaPalabrasClave.innerHTML +=
         `
         <div>
             <p class="negrita">${dato.palabraClave}</p>
@@ -19,7 +22,7 @@ datosTabla.forEach( (dato, i) => {
             <p class="negrita">${dato.pedidoPreciso}</p>
         </div>
         `
-    :   ayuda.innerHTML +=
+    :   tablaPalabrasClave.innerHTML +=
         `
         <div>
             <p>${dato.palabraClave}</p>
@@ -36,12 +39,12 @@ let recognition
 try {
     recognition = new webkitSpeechRecognition(); // Sirve para el reconocimiento del texto
 } catch (e) {
-    document.body.innerHTML = `<h1>Lo sentimos, su navegador no es compatible con el asistente. Puedes conocer los navegadores compatibles <a href="https://developer.mozilla.org/es/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#compatibilidad_de_navegadores_2" target="_blank">aqui</a></h1>`
+    document.body.innerHTML = `<h1>Lo sentimos, su navegador no soporta al asistente. Puedes chequear la compatibilidad <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility" target="_blank">aqui</a></h1>`
     console.error(e)
 }
 recognition.lang = "es-ES";
-recognition.continuous = true; // Si graba continuamente o no
-recognition.interimResults = false; // Nos devuelve información cuando nos quedamos callados
+recognition.continuous = false; // Si graba continuamente o no. No lo necesitamos ya que lo vamos a reiniciar con otro método
+recognition.interimResults = false; // "Controla si los resultados provisionales deben devolverse o no"
 
 let abortado
 recognition.onend = () => { // Este evento se ejecuta cuando se deja de escuchar el micrófono
@@ -49,13 +52,17 @@ recognition.onend = () => { // Este evento se ejecuta cuando se deja de escuchar
         console.log("El micrófono dejó de escuchar")
     } else { // Si nosotros no pedimos que se apague, vuelve a empezar
         recognition.start();
+        
     }
 }
 
-recognition.onerror = (event) => { // Muestra esto en consola en caso de que se produzca un error en el reconocedor
-    console.log(event.error)
-    if (event.error == "aborted") { // Si le dijimos que se apague, esto se cambia a true y no vuelve a empezar
-        abortado = true
+recognition.onerror = (e) => { // Muestra esto en consola en caso de que se produzca un error en el reconocedor
+    if (e.error == "aborted") { // Si le dijimos que se apague, "abortado" cambia a true y no vuelve a empezar
+        
+    } else if (e.error == "no-speech") {
+        console.log("No se detectó ningún sonido")
+    } else {
+        console.log(e.error)
     }
 }
 
@@ -64,14 +71,23 @@ recognition.onnomatch = () => {
 }
 
 btnStart.addEventListener("click", () => { // Inicia el reconocimiento de voz
-    recognition.start();
-    abortado = false
+    try {
+        recognition.start();
+        abortado = false // Cada vez que iniciamos el asistente reseteamos esta variable
+        cambiarEstado(estado, "ON")
+        historial.setAttribute("placeholder", `Ejemplo: ${nombre}, abrí wikipedia`)
+    } catch (e) {
+        console.error(e)
+        console.warn("Es posible que el error de arriba sea porque quisiste iniciar el asistente cuando ya estaba iniciado. Si no es así, hacémelo saber")
+    }
 })
 
 btnStop.addEventListener("click", () => { // Detiene el reconocimiento de voz
     historial.value += "\n\n"
     print_and_talk("Asistente apagado")
-    recognition.abort();
+    setTimeout(() => recognition.abort(), 3000) // Por alguna razón que no comprendo, es necesario ponerle un pequeño delay al aborto (a pesar de que no lo respeta y lo ejecuta sin esperar el tiempo indicado) para que no se trabe el programa cuando se aprieta el botón
+    cambiarEstado(estado, "OFF")
+    abortado = true
 })
 
 btnDelete.addEventListener("click", () => {
@@ -153,12 +169,14 @@ const pedidoPreciso = (rec) => {
 
 const pedidoGenerico = (rec) => { // La función va a devolver true si el if se corta antes de llegar al else. Esto quiere decir que se ejecutó un "pedido generico"
     let res = true
-    if ((rec.includes("estas") || rec.includes("seguis") || rec.includes("continuas")) && (rec.includes("ahi") || rec.includes("aca"))) { // Abarca casos comoo: estas ahi / seguis ahi / estas por ahi / seguis por ahi
+    if ((rec.includes("estas") || rec.includes("seguis") || rec.includes("continuas")) && (rec.includes("ahi") || rec.includes("aca") || rec.includes("presente"))) { // Abarca casos comoo: estas ahi / seguis ahi / estas por ahi / seguis por ahi
         print_and_talk("Estoy aquí")
 
     } else if (rec.includes("basta") || rec.includes("apaga")) {
         print_and_talk("Asistente apagado")
-        recognition.abort()
+        recognition.abort() // Acá no es necesario ponerle un delay como en el addEventListener del botón btnStop
+        cambiarEstado(estado, "OFF")
+        abortado = true
     
     } else if (rec.includes("hora")) {
         print_and_talk(`Son las ${horaActual()}`)
