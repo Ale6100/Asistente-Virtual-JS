@@ -1,15 +1,5 @@
 "use strict";
 
-const cambiarEstado = (estado, condicion) => {
-    if (condicion == "ON") {
-        estado.style.color = "rgb(0, 255, 0)"
-        estado.innerText = "ON"
-    } else {
-        estado.style.color = "rgb(255, 0, 0)"
-        estado.innerText = "OFF"
-    }
-}
-
 const datosTabla = [ // Datos para colocar en la tabla del html
     {
         palabraClave : "Palabras clave",
@@ -18,7 +8,7 @@ const datosTabla = [ // Datos para colocar en la tabla del html
         pedidoPreciso : "Pedido preciso*"
     },
     {
-        palabraClave : 'cancela',
+        palabraClave : 'cancelá',
         ejemplos : '"Ok, abrir Google. No, cancelá"',
         descripcion : "Cancela el pedido actual",
         pedidoPreciso : "No"
@@ -38,7 +28,7 @@ const datosTabla = [ // Datos para colocar en la tabla del html
     {
         palabraClave : "basta",
         ejemplos : '"Ok, basta"',
-        descripcion : "Apaga el programa. Tarda  varios segundos",
+        descripcion : "Apaga el programa. Puede tardar varios segundos",
         pedidoPreciso : "No"
     },
     {
@@ -91,6 +81,7 @@ const direcciones = { // Se usa en las funciones abrir() y en buscar()
     linkedin : ["LinKedIn", "https://www.linkedin.com/", "https://www.linkedin.com/search/results/all/?keywords="],
     github : ["GitHub", "https://github.com/", "https://github.com/search?q="],
     wikipedia : ["Wikipedia", "https://es.wikipedia.org/", "https://es.wikipedia.org/wiki/"],
+    tiktok : ["TikTok", "https://www.tiktok.com/", "https://www.tiktok.com/search?q="],
     whatsapp : ["WhatsApp Web", "https://web.whatsapp.com/"],
     netflix : ["Netflix", "https://www.netflix.com/"],
     disney : ["Disney", "https://www.disneyplus.com/"],
@@ -142,4 +133,33 @@ const eliminarDeRec = (rec, frase) => { // Elimina "frase" de "rec". Ejemplo: Su
     return espacioFiltrado.join(" ") // "yo juan"
 }
 
-export { cambiarEstado, datosTabla, buscar, horaActual, abrir , eliminarDeRec }
+const ejemplosPlacehoder = () => { // Devuelve un elemento al azar del array candidatos
+    const candidatos = [
+        "buscar definición de creatividad en google",
+        "buscar rock nacional en YouTube",
+        "me decís la hora?",
+        "que día es hoy?",
+        "abre Netflix",
+        "ir a Twitter",
+        "inicia el cronómetro",
+        "detené el cronómetro"
+    ]
+    return candidatos[parseInt(Math.random()*candidatos.length)]
+}
+
+const cambiarEstado = (condicion, estado, abortado, historial, nombre) => { // Cambia algunas cosas estéticas dependiendo de si está prendido o apagado el programa
+    if (condicion == "ON") {
+        estado.style.color = "rgb(0, 127, 0)"
+        estado.innerText = "ON"
+        abortado = false
+        historial.setAttribute("placeholder", `Ejemplo: ${nombre}, ${ejemplosPlacehoder()}`)
+    } else {
+        estado.style.color = "rgb(255, 0, 0)"
+        estado.innerText = "OFF"
+        abortado = true
+        historial.setAttribute("placeholder", `Aquí se anotarán tus pedidos`)
+    }
+    return abortado // Retorno el valor de "abortado" ya que es el único que no se guarda por sí solo
+}
+
+export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado }

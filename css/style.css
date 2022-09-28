@@ -3,36 +3,99 @@
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
 }
 
 html {
     font-size: 16px;
+    scroll-behavior: smooth;
 }
 
-body {
-    margin: 10px;
+.noTerminado {
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    font-size: 0.75rem;
+    position: fixed;
+    left: 1vw;
+    top: 1vh;
+}
+
+header {
+    width: 100%;
+    height: 60px;
+    font-size: 1.1rem;
+    background-color: rgb(100, 100, 255);
+}
+
+nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+ul li {
+    list-style: none;
+}
+
+li a {
+    padding: 5px 10px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 7px;
+    text-decoration: none;
+    color: rgb(255, 255, 180);
+}
+
+li a:hover {
+    background-color: rgb(50, 50, 255);
 }
 
 .negrita {
     font-weight: bold;
 }
 
-.noTerminado {
-    font-weight: bold;
-    color: rgb(255, 0, 0);
+main {
+    padding: 0px 5px;
 }
 
 h1 {
+    padding-top: 10px;
     text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.contenedor-asistente {
+    margin: 10px 0;
+    padding: 15px;
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px rgb(0, 0, 0);
+    background-color: rgb(205, 205, 255);
 }
 
 .botones {
-    margin: 10px 0px;
+    margin-bottom: 10px;
     width: 100%;
     text-align: center;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+#estado {
+    font-weight: bold;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 2px;
+}
+
+#estado span {
+    position: absolute
 }
 
 .botones button {
@@ -112,27 +175,30 @@ h1 {
     font-size: 1.1rem;
 }
 
-#divEstado {
-    font-size: 1.1rem;
-}
-
-#divEstado p {
-    font-weight: bold;
-}
-
 .divPalabrasClave {
-    margin: 10px 0px;
+    margin: 20px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px rgb(0, 0, 0);
+    background-color: rgb(205, 205, 255);
 }
 
 .palabrasClave {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.75rem;
 }
 
 #tablaPalabrasClave {
-    margin-top: 5px;
+    margin: 20px 0px;
     display: flex;
     flex-direction: column;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 1px;
+    background-color: rgb(255, 255, 255);
 }
 
 #tablaPalabrasClave div {
@@ -150,19 +216,25 @@ h1 {
     align-items: center;
 }
 
-.divAyuda {
-    margin: 10px 0px;
-}
-
 .aclaracion {
-    padding: 5px;
-    border: 1px solid rgb(0, 0, 0);
+    width: 100%;
 }
 
-.notas {
-    margin-top: 10px;
-    padding: 5px;
-    border: 1px solid rgb(0, 0, 0);
+.contenedor {
+    margin: 20px 0;
+    padding: 15px;
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px rgb(0, 0, 0);
+    background-color: rgb(205, 205, 255);
+    font-size: 1.1rem;
+}
+
+.contenedor h2 {
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.75rem;
 }
 
 #creditos {

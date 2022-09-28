@@ -1,14 +1,13 @@
 "use strict";
 
-import { cambiarEstado, datosTabla, buscar, horaActual, abrir , eliminarDeRec } from "./utils.js";
+import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado } from "./utils.js";
 
 const btnStart = document.getElementById("btnStart");
 const btnStop = document.getElementById("btnStop");
 const historial = document.getElementById("historial");
 const btnDelete = document.getElementById("btnDelete")
 
-const estado = document.getElementById("divEstado").children[0].children[0]
-cambiarEstado(estado, "OFF") // Le decimos al cartel que el asistente está apagado
+const estado = document.getElementById("estado").children[0]
 
 const tablaPalabrasClave = document.getElementById("tablaPalabrasClave")
 datosTabla.forEach( (dato, i) => {
@@ -73,9 +72,7 @@ recognition.onnomatch = () => {
 btnStart.addEventListener("click", () => { // Inicia el reconocimiento de voz
     try {
         recognition.start();
-        abortado = false // Cada vez que iniciamos el asistente reseteamos esta variable
-        cambiarEstado(estado, "ON")
-        historial.setAttribute("placeholder", `Ejemplo: ${nombre}, abrí wikipedia`)
+        abortado = cambiarEstado("ON", estado, abortado, historial, nombre)
     } catch (e) {
         console.error(e)
         console.warn("Es posible que el error de arriba sea porque quisiste iniciar el asistente cuando ya estaba iniciado. Si no es así, hacémelo saber")
@@ -85,9 +82,8 @@ btnStart.addEventListener("click", () => { // Inicia el reconocimiento de voz
 btnStop.addEventListener("click", () => { // Detiene el reconocimiento de voz
     historial.value += "\n\n"
     print_and_talk("Asistente apagado")
-    setTimeout(() => recognition.abort(), 3000) // Por alguna razón que no comprendo, es necesario ponerle un pequeño delay al aborto (a pesar de que no lo respeta y lo ejecuta sin esperar el tiempo indicado) para que no se trabe el programa cuando se aprieta el botón
-    cambiarEstado(estado, "OFF")
-    abortado = true
+    setTimeout(() => recognition.abort(), 4000) // Por alguna razón que aún no comprendo, es necesario ponerle un pequeño delay al aborto (a pesar de que no lo respeta y lo ejecuta sin esperar el tiempo indicado) para que no se trabe el programa cuando se aprieta el botón. Aún estoy analizando cuál sería el delay adecuado
+    abortado = cambiarEstado("OFF", estado, abortado, historial, nombre)
 })
 
 btnDelete.addEventListener("click", () => {
@@ -172,16 +168,15 @@ const pedidoGenerico = (rec) => { // La función va a devolver true si el if se 
     if ((rec.includes("estas") || rec.includes("seguis") || rec.includes("continuas")) && (rec.includes("ahi") || rec.includes("aca") || rec.includes("presente"))) { // Abarca casos comoo: estas ahi / seguis ahi / estas por ahi / seguis por ahi
         print_and_talk("Estoy aquí")
 
-    } else if (rec.includes("basta") || rec.includes("apaga")) {
+    } else if (rec.includes("basta") || rec.includes("apaga") || rec.includes("chau")) {
         print_and_talk("Asistente apagado")
         recognition.abort() // Acá no es necesario ponerle un delay como en el addEventListener del botón btnStop
-        cambiarEstado(estado, "OFF")
-        abortado = true
+        abortado = cambiarEstado("OFF", estado, abortado, historial, nombre)
     
     } else if (rec.includes("hora")) {
         print_and_talk(`Son las ${horaActual()}`)
     
-    } else if (rec.includes("fecha")) {
+    } else if (rec.includes("fecha") || rec.includes("dia")) {
         print_and_talk(`Hoy es ${new Date().toLocaleDateString()}`)
     
     } else if (rec.includes("gracias")) {
@@ -227,7 +222,7 @@ const ejecutarCronometro = (rec) => {
             print_and_talk("Ya hay un cronómetro iniciado, no puedes comenzar otro")
         }
     
-    } else if (rec.includes("detene") || rec.includes("para") || rec.includes("corta")) {
+    } else if (rec.includes("detene") || rec.includes("para") || rec.includes("corta") || rec.includes("termina")) {
         if (inicioCronometro != null) {
             let milisegundos = new Date() - inicioCronometro
             let minutosRedondeados = Math.round((milisegundos/60000 + Number.EPSILON) * 100)/100

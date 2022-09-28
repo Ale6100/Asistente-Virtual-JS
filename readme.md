@@ -1,10 +1,10 @@
-# Asistente Virtual en JavaScript (versión 0.1.3)
+# Asistente Virtual en JavaScript (versión 0.2.0)
 
 ¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Un asistente virtual es eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas. Por tal motivo creo que este proyecto es ideal para poner a prueba la pregunta inicial.
 
 ## Deploy 🌎
 
-Utiliza la versión más reciénte subida a la web [aquí](https://asistentevirtual.netlify.app/)
+Utiliza la versión más reciénte subida a la web [aquí](https://asistentevirtual.netlify.app/).
 
 ## Contexto 📌
 
