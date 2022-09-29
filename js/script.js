@@ -1,11 +1,11 @@
 "use strict";
 
-import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado } from "./utils.js";
+import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, primPalClave } from "./utils.js";
 
 const btnStart = document.getElementById("btnStart");
 const btnStop = document.getElementById("btnStop");
+const btnDelete = document.getElementById("btnDelete");
 const historial = document.getElementById("historial");
-const btnDelete = document.getElementById("btnDelete")
 
 const estado = document.getElementById("estado").children[0]
 
@@ -42,7 +42,7 @@ try {
     console.error(e)
 }
 recognition.lang = "es-ES";
-recognition.continuous = false; // Si graba continuamente o no. No lo necesitamos ya que lo vamos a reiniciar con otro método
+recognition.continuous = false; // Si graba continuamente o no. Para evitar errores no lo activamos ya que vamos a reiniciar con otro método
 recognition.interimResults = false; // "Controla si los resultados provisionales deben devolverse o no"
 
 let abortado
@@ -51,7 +51,7 @@ recognition.onend = () => { // Este evento se ejecuta cuando se deja de escuchar
         console.log("El micrófono dejó de escuchar")
     } else { // Si nosotros no pedimos que se apague, vuelve a empezar
         recognition.start();
-        
+        console.log("Escuchando...")
     }
 }
 
@@ -92,14 +92,14 @@ btnDelete.addEventListener("click", () => {
 })
 
 const limpiarTexto = (rec) => {
-    rec = rec.slice(rec.indexOf(nombre)) // Reefino el texto. Me quedo únicamente con la parte del texto que inicia con el nombre del asistente
+    rec = rec.slice(rec.toLowerCase().indexOf(nombre.toLowerCase())) // Reefino el texto. Me quedo únicamente con la parte del texto que inicia con el nombre del asistente
     if (k==1) {
-        historial.value += `${horaActual()} - ${k}) Dijiste: ${rec}\n`
+        historial.value += `----- ${horaActual()} -----\n${k}) Dijiste: ${rec}\n`
     } else {
-        historial.value += `\n\n${horaActual()} - ${k}) Dijiste: ${rec}\n`
+        historial.value += `\n\n----- ${horaActual()} -----\n${k}) Dijiste: ${rec}\n`
     }
     rec = rec.toLowerCase().replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll(",", "").replaceAll("?", "").replaceAll("¿", "") // Coloco el texto en minúsculas, quito las tildes, las comas y los signos de pregunta 
-    rec = eliminarDeRec(rec, nombre.toLowerCase()) // Quito el nombre del asistente del pedido
+    rec = eliminarDeRec(rec, nombre.toLowerCase()).trim() // Quito el nombre del asistente del pedido, los espacios iniciales, y finales si los hubiera
     if (rec[rec.length-1] == ".") { // Elimina el punto final
         rec = rec.slice(0, rec.length-1)
     }
@@ -149,11 +149,16 @@ const pedidos = (rec) => {
     }
 }
 
-// Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas
+// Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas. Estas palabras clave no tienen variaciones para no interferir con los pedidos genéricos
 const pedidoPreciso = (rec) => {
     let res = true
-    if (rec.includes("buscar")) {
+    if (primPalClave(rec, "buscar") && rec.includes("en")) {
         buscar(rec) ? print_and_talk("Hecho") : print_and_talk("Dirección no encontrada")
+
+    } else if (primPalClave(rec, "repetir") || primPalClave(rec, "repeti")) { // Elimina la primera palabra de rec y repite la frase
+        rec = rec.split(" ")
+        rec.splice(0, 1)
+        print_and_talk(`${rec.join(" ")}`)
 
     } else if (false) { // Próximamente
 
@@ -209,7 +214,7 @@ const print_and_talk = (text) => {
     speech.pitch = 1;  // Tono de voz
     window.speechSynthesis.speak(speech) // Le decimos que hable
     console.log(`${nombre} dijo: ${text}`)
-    historial.value += `${horaActual()} - ${nombre} dijo: ${text}`
+    historial.value += `${nombre} dijo: ${text}`
     historial.scrollTop = historial.scrollHeight
 }
 

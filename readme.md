@@ -1,6 +1,6 @@
-# Asistente Virtual en JavaScript (versión 0.2.0)
+# Asistente Virtual en JavaScript (versión 0.2.1)
 
-¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Un asistente virtual es eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas. Por tal motivo creo que este proyecto es ideal para poner a prueba la pregunta inicial.
+¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Creo que este proyecto es ideal para responder la pregunta inicial ya que un asistente virtual es justamente eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas.
 
 ## Deploy 🌎
 
@@ -36,6 +36,8 @@ Actualmente tiene muy pocas ya que es un proyecto nuevo y estoy limitado a hacer
 
 * Realiza búsquedas en los sitios web que quieras (google, youtube, twitter, etc.), siempre y cuando sean sitios que yo haya configurado previamente.
 
+* Repite cualquier frase que le pidas (sin insultos)
+
 * Te abre la página web que solicites (al igual que antes, solo funciona en algunas)
 
 * Te dice la hora
@@ -50,7 +52,7 @@ Actualmente tiene muy pocas ya que es un proyecto nuevo y estoy limitado a hacer
 
 Tiene dos funcionalidades más, pero son pequeñeces que solo sirven para aumentar la interactividad.
 
-Si se te ocurre cualquier mejora hacemela saber!
+Estoy abierto a sugerencias!
 
 ## Construido con 🛠️
 

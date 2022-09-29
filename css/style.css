@@ -41,7 +41,7 @@ ul li {
 
 li a {
     padding: 5px 10px;
-    border: 1px solid rgb(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 7px;
     text-decoration: none;
     color: rgb(255, 255, 180);
@@ -110,6 +110,10 @@ h1 {
     outline: 1px solid rgb(0, 0, 0);
 }
 
+#estado span {
+    color: rgb(255, 0, 0);
+}
+
 #btnStart {
     background-color: rgb(150, 255, 150);
 }
@@ -144,23 +148,6 @@ h1 {
 
 #btnDelete:active {
     background-color: rgb(170, 170, 170);
-}
-
-#btnSource {
-    background-color: rgb(150, 150, 255);
-}
-
-#btnSource:hover {
-    background-color: rgb(180, 180, 255);
-}
-
-#btnSource:active {
-    background-color: rgb(120, 120, 255);
-}
-
-#btnSource a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
 }
 
 .phistorial, .tips {
