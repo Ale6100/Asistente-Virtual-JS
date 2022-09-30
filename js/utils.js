@@ -72,12 +72,18 @@ const datosTabla = [ // Datos para colocar en la tabla del html
         ejemplos : '"Ok, iniciar cronómetro"',
         descripcion : "",
         pedidoPreciso : "No"
+    },
+    {
+        palabraClave : "eliminar registro",
+        ejemplos : '"Ok, eliminar registro"',
+        descripcion : 'Borra el registro de peticiones',
+        pedidoPreciso : "No"
     }
 ]
 
 const direcciones = { // El primer elemento es un array con palabras clave para identificar la página. El segundo son las páginas, y el tercero es una url que se completa con la frase que quieras buscar en los buscadores de las páginas
     googlemaps : [["Google Maps", "Maps"], "https://www.google.com.ar/maps", "https://www.google.com.ar/maps/search/"],
-    google : [["Google", "buscador"], "https://www.google.com.ar/", "https://www.google.com.ar/search?q="],
+    google : [["Google", "el buscador"], "https://www.google.com.ar/", "https://www.google.com.ar/search?q="],
     youtube : [["Youtube"], "https://www.youtube.com/", "https://www.youtube.com/results?search_query="], 
     steam : [["Steam", "Stim"], "https://store.steampowered.com/", "https://store.steampowered.com/search/?term="],
     facebook : [["Facebook"], "https://www.facebook.com/", "https://www.facebook.com/search/top/?q="],
@@ -101,7 +107,8 @@ const direcciones = { // El primer elemento es un array con palabras clave para 
     traductor : [["Traductor", "Translate"], "https://translate.google.com.ar/"],
     nacion : [["Banco Nacion"], "https://hb.redlink.com.ar/bna/login.htm"],
     santander : [["Banco Santander"], "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"],
-    buscagatos : [["Buscaminas", "Buscagatos"], "https://buscagatos.netlify.app/"]
+    buscagatos : [["Buscaminas", "Buscagatos"], "https://buscagatos.netlify.app/"],
+    codigofuente : [["codigo fuente"], "https://github.com/Ale6100/Asistente-Virtual-JS.git"]
 }
 
 const buscar = (rec) => { // Busca en el buscador del sitio web solicitado siempre y cuando lo tengamos previamente en el objeto "direcciones"
@@ -147,30 +154,28 @@ const ejemplosPlacehoder = () => { // Devuelve un elemento al azar del array can
     const candidatos = [
         "buscar temperatura actual en google",
         "buscar rock nacional en YouTube",
-        "Hola mundo",
+        "repetir: Hola mundo",
         "me decís la hora?",
         "que día es hoy?",
         "abre Netflix",
         "ir a Twitter",
-        "inicia el cronómetro",
-        "detené el cronómetro"
+        "inicia el cronómetro"
     ]
     return candidatos[parseInt(Math.random()*candidatos.length)]
 }
 
-const cambiarEstado = (condicion, estado, abortado, historial, nombre) => { // Cambia algunas cosas estéticas dependiendo de si está prendido o apagado el programa
+const cambiarEstado = (condicion, estado, terminar, registro, nombre) => { // Cambia algunas cosas dependiendo de si está prendido o apagado el programa
+    estado.innerText = condicion
     if (condicion == "ON") {
         estado.style.color = "rgb(0, 127, 0)"
-        estado.innerText = "ON"
-        abortado = false
-        historial.setAttribute("placeholder", `Ejemplo: ${nombre}, ${ejemplosPlacehoder()}`)
+        terminar = false
+        registro.setAttribute("placeholder", `Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"`)
     } else {
         estado.style.color = "rgb(255, 0, 0)"
-        estado.innerText = "OFF"
-        abortado = true
-        historial.setAttribute("placeholder", `Aquí se anotarán tus pedidos`)
+        terminar = true
+        registro.setAttribute("placeholder", `Aquí se anotarán tus pedidos`)
     }
-    return abortado // Retorno el valor de "abortado" ya que es el único que no se guarda por sí solo
+    return terminar // Retorno el valor de "terminar" ya que es el único que no se guarda por sí solo
 }
 
 const primPalClave = (rec, palabraClave) => { // Devuelve true si la primera palabra de rec es igual a "palabraClave"
@@ -181,4 +186,30 @@ const algunValorIncluido = (rec, array) => { // Devuelve true si algún elemento
     return array.some(elemento => rec.includes(elemento.toLowerCase()))
 }
 
-export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, primPalClave }
+const ejecutarCronometro = (rec, inicioCronometro, print_and_talk) => {
+    if (rec.includes("inicia") || rec.includes("comenza") || rec.includes("comienza")) {
+        if (inicioCronometro == null) {
+            print_and_talk("Cronómetro iniciado")
+            inicioCronometro = new Date() // Momento en el tiempo en el que inició el cronómetro
+        } else {
+            print_and_talk("Ya hay un cronómetro iniciado, no puedes comenzar otro")
+        }
+    
+    } else if (rec.includes("detene") || rec.includes("para") || rec.includes("corta") || rec.includes("termina") || rec.includes("finaliza")) {
+        if (inicioCronometro != null) {
+            let milisegundos = new Date() - inicioCronometro
+            let minutosRedondeados = Math.round((milisegundos/60000 + Number.EPSILON) * 100)/100
+            print_and_talk(`El cronómetro contabilizó ${minutosRedondeados.toString().replaceAll(".", ",")} minutos`)
+            inicioCronometro = null // Vuelve a colocar el tiempo inicial en su estado original
+        } else {
+            print_and_talk("No puedes detener un cronómetro que no ha sido iniciado")
+        }
+    } else if (rec == "cronometro") {
+        print_and_talk("Para usar el cronómetro debes especificar si quieres iniciarlo o detenerlo")
+    } else {
+        print_and_talk("No te entendí")
+    }
+    return inicioCronometro // Retorno este valor porque necesito sacarlo
+}
+
+export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, primPalClave, ejecutarCronometro, ejemplosPlacehoder }

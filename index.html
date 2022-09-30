@@ -40,19 +40,19 @@
     </header>
 
     <main>
-        <h1 id="idTitulo">Asistente Virtual (versión 0.2.1)</h1>
+        <h1 id="idTitulo">Asistente Virtual (versión 0.3.0)</h1>
     
         <div class="contenedor-asistente">
             <div class="botones">
                 <p id="estado"><span>OFF</span></p>
                 <button id="btnStart">Iniciar asistente</button>
                 <button id="btnStop">Apagar</button>
-                <button id="btnDelete">Borrar historial</button>
+                <button id="btnDelete">Borrar registro</button>
             </div>
            
             <div>
-                <p class="phistorial">Historial:</p>
-                <textarea id="historial" placeholder='Aquí se anotarán tus pedidos' readonly="readonly"></textarea>
+                <p class="pRegistro">Registro:</p>
+                <textarea id="registro" placeholder='Aquí se anotarán tus pedidos' readonly="readonly"></textarea>
             </div>
         </div>
         
@@ -60,7 +60,7 @@
             <h2 class="palabrasClave">Algunas palabras clave (la mayoría tiene variantes)</h2>
             <div id="tablaPalabrasClave"></div>
             <div class="aclaracion">
-                <p>(<span class="negrita">*</span>) Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas</p>
+                <p>(<span class="negrita">*</span>) Denomino "pedido preciso" a todos los pedidos que necesitan ser llamados con las mismas palabras clave y el mismo orden que se ve en la tabla</p>
                 <p>(<span class="negrita">**</span>) Funciona en sitios preseleccionados </p>
             </div>
         </div>
@@ -68,16 +68,16 @@
         <div id="idTips" class="contenedor">
             <h2>Tips</h2>
             <p><span class="negrita">1</span>) Todos los pedidos deben iniciar con el nombre del asistente. Actualmente se llama "Ok" por simplicidad (pronunciar "okey")</h3>
-            <p><span class="negrita">2</span>) Utiliza auriculares! Si bien no son necesarios, hará que el asistente te entienda mejor</p>
-            <p><span class="negrita">3</span>) Recuerda hablar bien claro para que el asistente te entienda</p>
+            <p><span class="negrita">2</span>) Los auriculares no son necesarios, pero harán que te entienda mejor</p>
+            <p><span class="negrita">3</span>) Recuerda hablar bien claro para que te entienda</p>
         </div>
     
         <div id="idProblemas" class="contenedor">
             <h2>Problemas</h2>
             <p><span class="negrita">1</span>) El asistente está pensado para ser utilizado en computadoras con windows</p>
             <p><span class="negrita">2</span>) No funciona en todos los navegadores</p>
-            <p><span class="negrita">3</span>) Asegúrate de haberle dado el permiso a tu navegador para utilizar tu micrófono</p>
-            <p><span class="negrita">4</span>) Se traba si lo enciendes o apagas justo después de que lo apagaste</p>
+            <p><span class="negrita">3</span>) Asegúrate de que el navegador tenga permiso para usar tu micrófono</p>
+            <p><span class="negrita">4</span>) A veces no te escucha porque justo se habla entre los instantes de tiempo donde termina de grabar y vuelve a empezar</p>
             <p><span class="negrita">5</span>) El proyecto no está terminado, por lo tanto es normal que falle</p>
         </div>
     </main>

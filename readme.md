@@ -1,6 +1,8 @@
-# Asistente Virtual en JavaScript (versión 0.2.1)
+# Asistente Virtual en JavaScript (versión 0.3.0)
 
 ¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Creo que este proyecto es ideal para responder la pregunta inicial ya que un asistente virtual es justamente eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas.
+
+Otro de mis objetivos en este proyecto es lograr que sea lo suficientemente útil para que desees usario a diaro, sabiendo que lo puedes dejar encendido en segundo plano para que esté listo en cualquier momento que lo necesites.
 
 ## Deploy 🌎
 
@@ -10,7 +12,11 @@ Utiliza la versión más reciénte subida a la web [aquí](https://asistentevirt
 
 La primera versión de este asistente la hice con Python allá por el 2020. Ahora es el turno de crearlo utilizando las herramientas que me proporciona JavaScript y el desarrollo web en general.
 
-Sin embargo hay que aclarar que JavaScript tiene una contra muy importante: hasta donde tengo entendido no puede controlar los dispositivos (teclado y mouse por ejemplo) ni acceder a tus archivos internos. Esto nos corta mucho el potencial que podría tener el asistente ya que está limitado al navegador.
+Sin embargo hay que aclarar dos contras muy importantes:
+
+1) Hasta donde tengo entendido JavaScript no puede controlar los dispositivos (teclado y mouse por ejemplo) ni acceder a tus archivos internos. Esto nos corta mucho el potencial que podría tener el asistente ya que está limitado al navegador.
+
+2) La API que uso para que funcione el programa no es compatible en muchos navegadores todavía, puedes chequearlo [aquí](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility).
 
 ## Comenzando 🚀
 
@@ -30,9 +36,9 @@ Ninguna!
 
 Ejecuta el código con Live Server y listo!
 
-## Funcionalidades por voz (pedidos) 🤖
+## Pedidos por voz 🤖
 
-Actualmente tiene muy pocas ya que es un proyecto nuevo y estoy limitado a hacer funcionalidades relacionadas al navegador. Todas ellas pueden ser ejecutadas simplemente pidiéndoselo por el micrófono. Estas son:
+Actualmente tiene muy pocos ya que es un proyecto nuevo y estoy limitado a crear pedidos relacionados al navegador. Las funcionalidades actuales que hace el asistente simplemente pidiéndolas por micrófono son:
 
 * Realiza búsquedas en los sitios web que quieras (google, youtube, twitter, etc.), siempre y cuando sean sitios que yo haya configurado previamente.
 
@@ -50,7 +56,7 @@ Actualmente tiene muy pocas ya que es un proyecto nuevo y estoy limitado a hacer
 
 * Podés preguntarle si "sigue ahí", para corroborar que todavía nos está escuchando aunque haya pasado mucho tiempo
 
-Tiene dos funcionalidades más, pero son pequeñeces que solo sirven para aumentar la interactividad.
+Tiene cuatro más pero son pequeñeces que solo sirven para aumentar la interactividad.
 
 Estoy abierto a sugerencias!
 
