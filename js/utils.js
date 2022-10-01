@@ -14,6 +14,12 @@ const datosTabla = [ // Datos para colocar en la tabla del html
         pedidoPreciso : "No"
     },
     {
+        palabraClave : '... en X minutos <span class="negrita">**</span>',
+        ejemplos : '"Ok, abrir wikipedia en 3 minutos"',
+        descripcion : "Ejecuta el pedido entre puntos suspensivos en X minutos",
+        pedidoPreciso : "Si"
+    },
+    {
         palabraClave : 'buscar...en X<span class="negrita">**</span>',
         ejemplos : '"Ok, buscar definición de oso en Google"',
         descripcion : "Busca lo que está entre puntos suspensivos en el sitio X",
@@ -21,7 +27,7 @@ const datosTabla = [ // Datos para colocar en la tabla del html
     },
     {
         palabraClave : 'repetir...',
-        ejemplos : "Ok, repetir: Messi trae la copa",
+        ejemplos : '"Ok, repetir: Messi trae la copa"',
         descripcion : "Repite la frase en puntos suspensivos",
         pedidoPreciso : "Si"
     },
@@ -152,6 +158,8 @@ const eliminarDeRec = (rec, frase, lugar="primero") => { // Elimina "frase" de "
 
 const ejemplosPlacehoder = () => { // Devuelve un elemento al azar del array candidatos
     const candidatos = [
+        "repetir: tiempo finalizado en 2 minutos",
+        "buscar noticiero en youtube en un minuto",
         "buscar temperatura actual en google",
         "buscar rock nacional en YouTube",
         "repetir: Hola mundo",
@@ -178,8 +186,15 @@ const cambiarEstado = (condicion, estado, terminar, registro, nombre) => { // Ca
     return terminar // Retorno el valor de "terminar" ya que es el único que no se guarda por sí solo
 }
 
-const primPalClave = (rec, palabraClave) => { // Devuelve true si la primera palabra de rec es igual a "palabraClave"
-    return rec.split(" ")[0] == palabraClave
+const palClave = (rec, palabraClave, lugar="primero") => { // Devuelve true si la primera palabra de rec es igual a "palabraClave" (si lugar no es "primero", entonces hace lo mismo pero con la última palabra)
+    rec = rec.split(" ")
+    if (lugar == "primero") {
+        return rec[0] == palabraClave
+    } else {
+        return rec[rec.length-1] == palabraClave
+    }
+   
+    // return (lugar == "primero") ? (rec.split(" ")[0] == palabraClave) : (rec.split(" ")[rec.length-1] == palabraClave)
 }
 
 const algunValorIncluido = (rec, array) => { // Devuelve true si algún elemento del array está incluido en rec
@@ -212,4 +227,18 @@ const ejecutarCronometro = (rec, inicioCronometro, print_and_talk) => {
     return inicioCronometro // Retorno este valor porque necesito sacarlo
 }
 
-export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, primPalClave, ejecutarCronometro, ejemplosPlacehoder }
+const programarPedido = (rec, pedidos) => { // Programa un pedido para dentro de X minutos
+    rec = rec.replace("un millon", 1000000).replace("un", "1").replace("dos", "2").replace("cuatro", "4") // Reemplaza texto por número. Parece que hasta el millón reconoce solo esos cuatro con letras
+    rec = rec.split(" ")
+    rec.pop() // Primero quito la última palabra clave (minuto o minutos)
+    let tiempo = rec.pop() // Después quito y guardo el tiempo pedido
+    rec.pop() // Después quito la palabra antes del número (ej: "Buscar pepe en google en 5 minutos" ahora se convirtió en "Buscar pepe en google")
+    rec = rec.join(" ")
+    console.log(`Pedido programado: "${rec}"`)
+    console.log(`Tiempo de espera: ${tiempo} minutos`)
+    setTimeout(() => { // Hago que el pedido se ejecute en el tiempo solicitado
+        pedidos(rec)
+    }, tiempo*60000)
+}
+
+export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido }

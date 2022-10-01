@@ -1,6 +1,6 @@
 "use strict";
 
-import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, primPalClave, ejecutarCronometro, ejemplosPlacehoder } from "./utils.js";
+import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido } from "./utils.js";
 
 const btnStart = document.getElementById("btnStart");
 const btnStop = document.getElementById("btnStop");
@@ -47,9 +47,9 @@ recognition.interimResults = false; // Controla si los resultados provisionales 
 recognition.lang = "es-ES";
 recognition.maxAlternatives = 1; // Cantidad máximas de frases alternativas devueltas por cada reconocimiento de voz
 
-recognition.onnomatch = () => {
-    console.log('No se reconoció ninguna palabra')
-}
+// recognition.onnomatch = () => {
+//     console.log('No se reconoció ninguna palabra')
+// }
 
 recognition.onerror = (e) => { // Muestra esto en consola en caso de que se produzca un error en el reconocedor
     if (e.error == "no-speech") {
@@ -117,7 +117,6 @@ const print_and_talk = (text) => { // El asistente lee lo que hay en el string "
     speech.rate = 1; // Velocidad del habla
     speech.pitch = 1;  // Tono de voz
     window.speechSynthesis.speak(speech) // Le decimos que hable
-    console.log(`${nombre} dijo: ${text}`)
     registro.value += `${nombre} dijo: ${text}`
     registro.scrollTop = registro.scrollHeight
 }
@@ -165,10 +164,14 @@ const pedidos = (rec) => {
 // Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas. Estas palabras clave no tienen variaciones para no interferir con los pedidos genéricos
 const pedidoPreciso = (rec) => {
     let res = true
-    if (primPalClave(rec, "buscar") && rec.includes("en")) {
+    if (palClave(rec, "minutos", "ultimo") || palClave(rec, "minuto", "ultimo")) {
+        print_and_talk("Pedido programado")
+        programarPedido(rec, pedidos)
+
+    } else if (palClave(rec, "buscar") && rec.includes("en")) {
         buscar(rec) ? print_and_talk("Hecho") : print_and_talk("Dirección no encontrada")
 
-    } else if (primPalClave(rec, "repetir") || primPalClave(rec, "repeti")) { // Elimina la primera palabra de rec y repite la frase
+    } else if (palClave(rec, "repetir") || palClave(rec, "repeti") || palClave(rec, "decir") || palClave(rec, "deci")) { // Elimina la primera palabra de rec y repite la frase
         rec = rec.split(" ")
         rec.splice(0, 1)
         print_and_talk(`${rec.join(" ")}`)
@@ -186,15 +189,15 @@ const pedidoGenerico = (rec) => { // La función va a devolver true si el if se 
     if ((rec.includes("estas") || rec.includes("seguis") || rec.includes("continuas")) && (rec.includes("ahi") || rec.includes("aca") || rec.includes("presente"))) { // Abarca casos comoo: estas ahi / seguis ahi / estas por ahi / seguis por ahi
         print_and_talk("Estoy aquí")
 
-    } else if (rec.includes("basta") || rec.includes("apaga") || rec.includes("chau")) {
+    } else if ((rec.includes("basta") || rec.includes("apaga") || rec.includes("chau")) && !rec.includes("bastante")) {
         print_and_talk("Asistente apagado")
         recognition.stop()
         terminar = cambiarEstado("OFF", estado, terminar, registro, nombre)
     
-    } else if (rec.includes("hora")) {
+    } else if (rec.includes("hora") && !rec.includes("ahora")) {
         print_and_talk(`Son las ${horaActual()}`)
     
-    } else if (rec.includes("fecha") || rec.includes("dia")) {
+    } else if ((rec.includes("fecha") || rec.includes("dia")) && !rec.includes("edia")) {
         print_and_talk(`Hoy es ${new Date().toLocaleDateString()}`)
     
     } else if (rec.includes("gracias")) {

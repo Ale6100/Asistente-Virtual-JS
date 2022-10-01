@@ -1,4 +1,4 @@
-# Asistente Virtual en JavaScript (versión 0.3.0)
+# Asistente Virtual en JavaScript (versión 0.3.1)
 
 ¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Creo que este proyecto es ideal para responder la pregunta inicial ya que un asistente virtual es justamente eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas.
 
@@ -16,13 +16,15 @@ Sin embargo hay que aclarar dos contras muy importantes:
 
 1) Hasta donde tengo entendido JavaScript no puede controlar los dispositivos (teclado y mouse por ejemplo) ni acceder a tus archivos internos. Esto nos corta mucho el potencial que podría tener el asistente ya que está limitado al navegador.
 
-2) La API que uso para que funcione el programa no es compatible en muchos navegadores todavía, puedes chequearlo [aquí](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility).
+2) La API que uso para que funcione el programa no está terminada y no es compatible en muchos navegadores todavía, puedes chequearlo [aquí](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility).
+
+3) Está pensado para ser funcional en computadoras con navegadores compatibles, no en celulares.
 
 ## Comenzando 🚀
 
 Descarga el archivo comprimido .zip desde el botón verde "code" o haz click [aquí](https://github.com/Ale6100/Asistente-Virtual-JS/archive/refs/heads/main.zip)
 
-Mira **Despliegue** para saber cómo desplegar el proyecto en tu computadora y **Funcionalidades** para conocer la mayoría de las funciones actuales.
+Mira **Despliegue** para saber cómo desplegar el proyecto en tu computadora y **Pedidos por voz** para conocer la mayoría de las funciones actuales.
 
 ### Pre-requisitos 📋
 
@@ -46,6 +48,8 @@ Actualmente tiene muy pocos ya que es un proyecto nuevo y estoy limitado a crear
 
 * Te abre la página web que solicites (al igual que antes, solo funciona en algunas)
 
+* Podés pedirle que te ejecute cualquier pedido dentro de la lista en n minutos (siendo n un número natural menor a un millón)
+
 * Te dice la hora
 
 * Te dice la fecha
@@ -56,7 +60,7 @@ Actualmente tiene muy pocos ya que es un proyecto nuevo y estoy limitado a crear
 
 * Podés preguntarle si "sigue ahí", para corroborar que todavía nos está escuchando aunque haya pasado mucho tiempo
 
-Tiene cuatro más pero son pequeñeces que solo sirven para aumentar la interactividad.
+Tiene varios más pero son pequeñeces que solo sirven para aumentar la interactividad.
 
 Estoy abierto a sugerencias!
 
