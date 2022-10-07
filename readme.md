@@ -1,4 +1,4 @@
-# Asistente Virtual en JavaScript (versión 0.3.1)
+# Asistente Virtual en JavaScript (versión 0.3.2)
 
 ¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Creo que este proyecto es ideal para responder la pregunta inicial ya que un asistente virtual es justamente eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas.
 
@@ -66,7 +66,7 @@ Estoy abierto a sugerencias!
 
 ## Construido con 🛠️
 
-* HTML5
+* HTML
 * CSS
 * JavaScript
 * [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) - Texto-a-voz y Reconocimiento de voz asíncrono

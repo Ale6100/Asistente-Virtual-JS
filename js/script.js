@@ -152,8 +152,6 @@ const pedidos = (rec) => {
         } else if (pedidoGenerico(rec)) {
             null
 
-        } else if (rec != "") { // Devuelve esto si no se ejecutó ningún pedido y si rec no es un string vacío
-            print_and_talk("No te entendí")
         }
     } catch (e) { // Si hay un error imprevisto lo muestra
         print_and_talk("Error desconocido")

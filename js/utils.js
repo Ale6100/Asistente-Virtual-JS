@@ -8,21 +8,15 @@ const datosTabla = [ // Datos para colocar en la tabla del html
         pedidoPreciso : "Pedido preciso*"
     },
     {
-        palabraClave : 'cancelá',
-        ejemplos : '"Ok, abrir Google. No, cancelá"',
-        descripcion : "Cancela el pedido actual",
-        pedidoPreciso : "No"
-    },
-    {
-        palabraClave : '... en X minutos <span class="negrita">**</span>',
-        ejemplos : '"Ok, abrir wikipedia en 3 minutos"',
-        descripcion : "Ejecuta el pedido entre puntos suspensivos en X minutos",
-        pedidoPreciso : "Si"
-    },
-    {
         palabraClave : 'buscar...en X<span class="negrita">**</span>',
         ejemplos : '"Ok, buscar definición de oso en Google"',
         descripcion : "Busca lo que está entre puntos suspensivos en el sitio X",
+        pedidoPreciso : "Si"
+    },
+    {
+        palabraClave : '... en X minutos',
+        ejemplos : '"Ok, abrir wikipedia en 3 minutos"',
+        descripcion : "Ejecuta el pedido entre puntos suspensivos en X minutos",
         pedidoPreciso : "Si"
     },
     {
@@ -40,7 +34,7 @@ const datosTabla = [ // Datos para colocar en la tabla del html
     {
         palabraClave : "basta",
         ejemplos : '"Ok, basta"',
-        descripcion : "Apaga el programa. Puede tardar varios segundos",
+        descripcion : "Apaga el asistente",
         pedidoPreciso : "No"
     },
     {
@@ -83,6 +77,12 @@ const datosTabla = [ // Datos para colocar en la tabla del html
         palabraClave : "eliminar registro",
         ejemplos : '"Ok, eliminar registro"',
         descripcion : 'Borra el registro de peticiones',
+        pedidoPreciso : "No"
+    },
+    {
+        palabraClave : 'cancelá',
+        ejemplos : '"Ok, abrir Google. No, cancelá"',
+        descripcion : "Cancela el pedido actual",
         pedidoPreciso : "No"
     }
 ]
