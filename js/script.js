@@ -1,6 +1,6 @@
 "use strict";
 
-import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido } from "./utils.js";
+import { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido, elminarRegistro } from "./utils.js";
 
 const btnStart = document.getElementById("btnStart");
 const btnStop = document.getElementById("btnStop");
@@ -88,9 +88,8 @@ btnStop.addEventListener("click", () => { // Detiene el reconocimiento de voz
 
 btnDelete.addEventListener("click", () => {
     if (registro.value != "") {
-        registro.value = ""
         k = 1
-        registro.setAttribute("placeholder", `Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"`)
+        elminarRegistro(registro, estado, nombre)  
     }
 
 })
@@ -151,7 +150,6 @@ const pedidos = (rec) => {
 
         } else if (pedidoGenerico(rec)) {
             null
-
         }
     } catch (e) { // Si hay un error imprevisto lo muestra
         print_and_talk("Error desconocido")
@@ -159,7 +157,7 @@ const pedidos = (rec) => {
     }
 }
 
-// Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con las palabras exactas. Estas palabras clave no tienen variaciones para no interferir con los pedidos genéricos
+// Denomino "pedido preciso" a todos aquellos pedidos que necesitan ser solicitados con el mismo orden de palabras que se ve en la tabla
 const pedidoPreciso = (rec) => {
     let res = true
     if (palClave(rec, "minutos", "ultimo") || palClave(rec, "minuto", "ultimo")) {
@@ -213,9 +211,8 @@ const pedidoGenerico = (rec) => { // La función va a devolver true si el if se 
     } else if ((rec.includes("borrar") || rec.includes("elimina")) && (rec.includes("historial") || rec.includes("registro"))) { // Elimina el registro de peticiones
         if (registro.value != "") {
             print_and_talk("Hecho")
-            registro.value = ""
             k = 1
-            registro.setAttribute("placeholder", `Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"`)
+            elminarRegistro(registro, estado, nombre)
         } else {
             print_and_talk("El registro ya estaba vacío")
         }

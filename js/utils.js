@@ -114,7 +114,8 @@ const direcciones = { // El primer elemento es un array con palabras clave para 
     nacion : [["Banco Nacion"], "https://hb.redlink.com.ar/bna/login.htm"],
     santander : [["Banco Santander"], "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"],
     buscagatos : [["Buscaminas", "Buscagatos"], "https://buscagatos.netlify.app/"],
-    codigofuente : [["codigo fuente"], "https://github.com/Ale6100/Asistente-Virtual-JS.git"]
+    codigofuente : [["codigo fuente"], "https://github.com/Ale6100/Asistente-Virtual-JS.git"],
+    plazofijo: [["Simulador plazo fijo", "Simulador de plazo fijo"], "https://simuladorplazofijo.netlify.app/"]
 }
 
 const buscar = (rec) => { // Busca en el buscador del sitio web solicitado siempre y cuando lo tengamos previamente en el objeto "direcciones"
@@ -241,4 +242,13 @@ const programarPedido = (rec, pedidos) => { // Programa un pedido para dentro de
     }, tiempo*60000)
 }
 
-export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido }
+const elminarRegistro = (registro, estado, nombre) => { // Elimina el registro de pedidos
+    registro.value = ""
+    if (estado.innerText == "ON") {
+        registro.setAttribute("placeholder", `Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"`)
+    } else {
+        registro.setAttribute("placeholder", `Aquí se anotarán tus pedidos`)
+    }
+}
+
+export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido, elminarRegistro }
