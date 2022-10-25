@@ -1,24 +1,20 @@
-# Asistente Virtual en JavaScript (versión 0.3.3)
+# Asistente Virtual en JavaScript (versión 0.3.4)
 
-¿Hasta qué tan lejos pueden llegar las funcionalidades de un código? Creo que este proyecto es ideal para responder esta pregunta ya que un asistente virtual es justamente eso: un asistente, por lo tanto debería ser capaz de hacer todo lo que le pidas.
+Mi objetivo con este proyecto es lograr que el asistente sea lo suficientemente útil como para que desees utilizarlo a diaro, sabiendo que lo puedes dejar encendido en segundo plano para que esté listo en cualquier momento que lo necesites. 
 
-Otro de mis objetivos en este proyecto es lograr que sea lo suficientemente útil como para que desees usario a diaro, sabiendo que lo puedes dejar encendido en segundo plano para que esté listo en cualquier momento que lo necesites.
-
-## Deploy 🌎
-
-Utiliza la versión más reciénte subida a la web [aquí](https://asistentevirtual.netlify.app/).
+Usa la versión más reciénte subida a la web [aquí](https://asistentevirtual.netlify.app/).
 
 ## Contexto 📌
 
 La primera versión de este asistente la hice con Python allá por el 2020. Ahora es el turno de crearlo utilizando las herramientas que me proporciona JavaScript y el desarrollo web en general.
 
-Sin embargo hay que aclarar tres contras muy importantes:
+Sin embargo debo aclarar tres contras **muy importantes**:
 
 1) Hasta donde tengo entendido JavaScript no puede controlar los dispositivos (teclado y mouse por ejemplo) ni acceder a tus archivos internos. Esto nos corta mucho el potencial que podría tener el asistente ya que está limitado al navegador.
 
 2) La API que uso para que funcione el programa no está terminada y no es compatible en muchos navegadores todavía, puedes chequearlo [aquí](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility).
 
-3) Está pensado para ser funcional en computadoras con [navegadores compatibles](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility), no en celulares.
+3) Está pensado para ser funcional en computadoras con navegadores compatibles, no en celulares.
 
 ## Comenzando 🚀
 
