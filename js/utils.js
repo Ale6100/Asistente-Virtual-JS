@@ -101,7 +101,7 @@ const direcciones = { // El primer elemento es un array con palabras clave para 
     wikipedia: [["Wikipedia"], "https://es.wikipedia.org/", "https://es.wikipedia.org/wiki/"],
     tiktok: [["Tik Tok", "Tic Tac", "Tic Toc"], "https://www.tiktok.com/", "https://www.tiktok.com/search?q="],
     amazon: [["Amazon"], "https://www.amazon.com/", "https://www.amazon.com/s?k="],
-    whatsapp: [["WhatsApp Web"], "https://web.whatsapp.com/"],
+    whatsapp: [["WhatsApp"], "https://web.whatsapp.com/"],
     netflix: [["Netflix"], "https://www.netflix.com/"],
     disney: [["Disney"], "https://www.disneyplus.com/"],
     prime: [["Prime Video"], "https://www.primevideo.com/"],
@@ -115,8 +115,7 @@ const direcciones = { // El primer elemento es un array con palabras clave para 
     santander: [["Banco Santander"], "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"],
     buscagatos: [["Buscaminas", "Buscagatos"], "https://buscagatos.netlify.app/"],
     codigofuente: [["codigo fuente"], "https://github.com/Ale6100/Asistente-Virtual-JS.git"],
-    plazofijo: [["Simulador plazo fijo", "Simulador de plazo fijo"], "https://simuladorplazofijo.netlify.app/"],
-    reproductor: [["Reproductor de videos"], "https://reproductordevideos.netlify.app/"]
+    plazofijo: [["Simulador plazo fijo", "Simulador de plazo fijo"], "https://simuladorplazofijo.netlify.app/"]
 }
 
 const buscar = (rec) => { // Busca en el buscador del sitio web solicitado siempre y cuando lo tengamos previamente en el objeto "direcciones"
@@ -179,11 +178,9 @@ const cambiarEstado = (condicion, estado, terminar, registro, nombre) => { // Ca
     if (condicion == "ON") {
         estado.style.color = "rgb(0, 127, 0)"
         terminar = false
-        registro.setAttribute("placeholder", `Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"`)
     } else {
         estado.style.color = "rgb(255, 0, 0)"
         terminar = true
-        registro.setAttribute("placeholder", `Aquí se anotarán tus pedidos`)
     }
     return terminar // Retorno el valor de "terminar" ya que es el único que no se guarda por sí solo
 }
@@ -195,8 +192,6 @@ const palClave = (rec, palabraClave, lugar="primero") => { // Devuelve true si l
     } else {
         return rec[rec.length-1] == palabraClave
     }
-   
-    // return (lugar == "primero") ? (rec.split(" ")[0] == palabraClave) : (rec.split(" ")[rec.length-1] == palabraClave)
 }
 
 const algunValorIncluido = (rec, array) => { // Devuelve true si algún elemento del array está incluido en rec
@@ -243,13 +238,8 @@ const programarPedido = (rec, pedidos) => { // Programa un pedido para dentro de
     }, tiempo*60000)
 }
 
-const elminarRegistro = (registro, estado, nombre) => { // Elimina el registro de pedidos
-    registro.value = ""
-    if (estado.innerText == "ON") {
-        registro.setAttribute("placeholder", `Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"`)
-    } else {
-        registro.setAttribute("placeholder", `Aquí se anotarán tus pedidos`)
-    }
+const elminarRegistro = (registro, nombre) => { // Elimina el registro de pedidos
+    registro.innerHTML = `<p class="placeholderRegistro">Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"</p>`
 }
 
 export { datosTabla, buscar, horaActual, abrir , eliminarDeRec, cambiarEstado, palClave, ejecutarCronometro, ejemplosPlacehoder, programarPedido, elminarRegistro }

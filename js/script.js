@@ -32,11 +32,12 @@ datosTabla.forEach( (dato, i) => {
         `
 })
 
-////////// Configuraciones iniciales
+//* ----- Configuraciones iniciales
 
 let recognition
 try {
-    recognition = new webkitSpeechRecognition(); // Sirve para el reconocimiento del texto
+    const reconocimientoVoz = window.SpeechRecognition || window.webkitSpeechRecognition
+    recognition = new reconocimientoVoz() // Sirve para el reconocimiento del texto
 } catch (e) {
     document.body.innerHTML = `<h1>Lo sentimos, su navegador no soporta al asistente. Puedes chequear la compatibilidad <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility" target="_blank">aqui</a></h1>`
     console.error(e)
@@ -73,6 +74,7 @@ btnStart.addEventListener("click", () => { // Inicia el reconocimiento de voz
     try {
         recognition.start();
         terminar = cambiarEstado("ON", estado, terminar, registro, nombre)
+        if (k == 1) registro.innerHTML = `<p class="placeholderRegistro">Ejemplo: Di "${nombre}, ${ejemplosPlacehoder()}"</p>`
     } catch (e) {
         console.error(e)
         console.warn("Es posible que el error de arriba sea porque quisiste iniciar el asistente cuando ya estaba iniciado")
@@ -80,26 +82,29 @@ btnStart.addEventListener("click", () => { // Inicia el reconocimiento de voz
 })
 
 btnStop.addEventListener("click", () => { // Detiene el reconocimiento de voz
-    registro.value += "\n\n"
-    print_and_talk("Asistente apagado")
-    recognition.stop()
-    terminar = cambiarEstado("OFF", estado, terminar, registro, nombre)
+    if (estado.innerText === "ON") { // Sólo lo va a detener si estaba prendido
+        recognition.stop()
+        terminar = cambiarEstado("OFF", estado, terminar, registro, nombre)
+    }
 })
 
 btnDelete.addEventListener("click", () => {
-    if (registro.value != "") {
+    if (k !== 1) { // El if es para que no nos actualice el "placeholder" si apretamos más de una vez seguida en el botón
         k = 1
-        elminarRegistro(registro, estado, nombre)  
+        elminarRegistro(registro, nombre) 
     }
-
 })
 
 const limpiarTexto = (rec) => {
     rec = rec.slice(rec.toLowerCase().indexOf(nombre.toLowerCase())) // Reefino el texto. Me quedo únicamente con la parte del texto que inicia con el nombre del asistente
     if (k==1) {
-        registro.value += `----- ${horaActual()} -----\n${k}) Dijiste: ${rec}\n`
+        registro.innerHTML = `
+        <p>----- ${horaActual()} -----</p>
+        <p><span class="negrita">${k}</span>) Dijiste: ${rec}</p>`
     } else {
-        registro.value += `\n\n----- ${horaActual()} -----\n${k}) Dijiste: ${rec}\n`
+        registro.innerHTML += `
+        <p class="registroHora">----- ${horaActual()} -----</p>
+        <p><span class="negrita">${k}</span>) Dijiste: ${rec}</p>`
     }
     rec = rec.toLowerCase().replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll(",", "").replaceAll("?", "").replaceAll("¿", "") // Coloco el texto en minúsculas, quito las tildes, las comas y los signos de pregunta 
     rec = eliminarDeRec(rec, nombre.toLowerCase()).trim() // Quito el nombre del asistente del pedido, los espacios iniciales, y finales si los hubiera
@@ -116,14 +121,14 @@ const print_and_talk = (text) => { // El asistente lee lo que hay en el string "
     speech.rate = 1; // Velocidad del habla
     speech.pitch = 1;  // Tono de voz
     window.speechSynthesis.speak(speech) // Le decimos que hable
-    registro.value += `${nombre} dijo: ${text}`
+    registro.innerHTML += `<p>${nombre} dijo: ${text}</p>`
     registro.scrollTop = registro.scrollHeight
 }
 
-////////// Configuración de pedidos
+//* ----- Configuración de pedidos
 
 const nombre = "Ok" // Nombre del asistente (sin tildes)
-let k = 1
+let k = 1 // Cantidad de veces que escuchó un pedido (lo reinicio cuando borro el registro)
 let inicioCronometro = null
 
 recognition.onresult = (e) => { // Ejecuta esta función cuando hayamos recibido algo a traves del micrófono
@@ -209,10 +214,10 @@ const pedidoGenerico = (rec) => { // La función va a devolver true si el if se 
         inicioCronometro = ejecutarCronometro(rec, inicioCronometro, print_and_talk)
 
     } else if ((rec.includes("borrar") || rec.includes("elimina")) && (rec.includes("historial") || rec.includes("registro"))) { // Elimina el registro de peticiones
-        if (registro.value != "") {
+        if (k !== 2) { // El if es para que no nos actualice el "placeholder" si pedimos más de una vez seguido el pedido. También es para que no trate de borrar el registro si ya estaba borrado
             print_and_talk("Hecho")
             k = 1
-            elminarRegistro(registro, estado, nombre)
+            elminarRegistro(registro, nombre)
         } else {
             print_and_talk("El registro ya estaba vacío")
         }

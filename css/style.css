@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 500;
 }
 
 html {
@@ -23,7 +22,6 @@ html {
 header {
     width: 100%;
     height: 60px;
-    font-size: 1.1rem;
     background-color: rgb(100, 100, 255);
 }
 
@@ -35,16 +33,19 @@ nav {
     align-items: center;
 }
 
-ul li {
+nav ul li {
     list-style: none;
+    white-space: nowrap;
 }
 
-li a {
+nav ul li a {
     padding: 5px 10px;
     border: 2px solid rgb(0, 0, 0);
     border-radius: 7px;
     text-decoration: none;
     color: rgb(255, 255, 180);
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 li a:hover {
@@ -78,7 +79,6 @@ h1 {
 .botones {
     margin-bottom: 10px;
     width: 100%;
-    text-align: center;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -92,6 +92,7 @@ h1 {
     align-items: center;
     position: relative;
     bottom: 2px;
+    width: 45px;
 }
 
 #estado span {
@@ -158,8 +159,22 @@ h1 {
 #registro {
     padding: 1px 5px;
     width: 100%;
-    height: 34vh;
+    height: 50vh;
     font-size: 1.1rem;
+    overflow-y: auto;
+    background-color: rgb(255, 255, 255);
+}
+
+.placeholderRegistro {
+    color: rgb(100, 100, 100);
+}
+
+.registroHora {
+    margin-top: 10px;
+}
+
+.registroApagar {
+    margin-top: 10px;
 }
 
 .divPalabrasClave {
@@ -176,7 +191,6 @@ h1 {
 
 .palabrasClave {
     font-weight: bold;
-    font-size: 1.75rem;
 }
 
 #tablaPalabrasClave {
@@ -196,7 +210,7 @@ h1 {
 #tablaPalabrasClave div p {
     padding: 3px;
     min-height: 20px;
-    width: 100%;
+    width: 25%;
     border: 1px solid rgb(0, 0, 0);
     display: flex;
     justify-content: center;
@@ -217,25 +231,61 @@ h1 {
     font-size: 1.1rem;
 }
 
+h2 {
+    font-size: 1.75rem;
+}
+
 .contenedor h2 {
     margin-bottom: 15px;
     text-align: center;
     font-weight: bold;
-    font-size: 1.75rem;
 }
 
 #creditos {
     position: fixed;
     right: 2vw;
     bottom: 1vh;
-    transition: transform 0.5s;
+    transition: all 0.5s;
 }
 
 #creditos:hover {
     transform: scale(1.1);
+    font-weight: bold;
+    transform: translate(0px, 0px);
 }
 
 #creditos a {
     text-decoration: none;
     color: rgb(0, 0, 0);
+}
+
+@media screen and (max-width: 523px) {
+    header {
+        height: 50px;
+    }
+    
+    nav ul li a {
+        font-size: 0.8rem;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    #estado {
+        font-size: 1.6rem;
+    }
+
+    .botones button {
+        padding: 3px;
+        font-size: 0.9rem;
+    }
+
+    #tablaPalabrasClave div p {
+        font-size: 0.9rem
+    }
 }

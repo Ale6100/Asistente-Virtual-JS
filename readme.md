@@ -1,4 +1,4 @@
-# Asistente Virtual en JavaScript (versión 0.3.4)
+# Asistente Virtual en JavaScript (versión 0.4.0)
 
 Mi objetivo con este proyecto es lograr que el asistente sea lo suficientemente útil como para que desees utilizarlo a diaro, sabiendo que lo puedes dejar encendido en segundo plano para que esté listo en cualquier momento que lo necesites. 
 
