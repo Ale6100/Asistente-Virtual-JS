@@ -1,14 +1,14 @@
-# Asistente Virtual en JavaScript (versión 0.4.0)
+# Asistente Virtual en JavaScript
+
+> **Importante**: Este proyecto ya no recibe actualizaciones ya que decidí reemplazarlo por uno mejor hecho con Python, aprovechando la versatilidad y potencial que dicho lenguaje posee. Haz click [aquí](https://github.com/Ale6100/Asistente-Virtual-Python.git) para ver la nueva versión.
 
 Mi objetivo con este proyecto es lograr que el asistente sea lo suficientemente útil como para que desees utilizarlo a diaro, sabiendo que lo puedes dejar encendido en segundo plano para que esté listo en cualquier momento que lo necesites. 
 
-Usa la versión más reciénte subida a la web [aquí](https://asistentevirtual.netlify.app/).
+Utiliza la versión más reciente subida a la web [aquí](https://asistentevirtual.netlify.app/).
 
-## Contexto 📌
+## Limitaciones 📌
 
-La primera versión de este asistente la hice con Python allá por el 2020. Ahora es el turno de crearlo utilizando las herramientas que me proporciona JavaScript y el desarrollo web en general.
-
-Sin embargo debo aclarar tres contras **muy importantes**:
+Debo aclarar tres limitaciones **muy importantes**:
 
 1) Hasta donde tengo entendido JavaScript no puede controlar los dispositivos (teclado y mouse por ejemplo) ni acceder a tus archivos internos. Esto nos corta mucho el potencial que podría tener el asistente ya que está limitado al navegador.
 
@@ -36,7 +36,7 @@ Ejecuta el código con Live Server y listo!
 
 ## Pedidos por voz 🤖
 
-Actualmente tiene muy pocos ya que es un proyecto nuevo y estoy limitado a crear pedidos relacionados al navegador. Las funcionalidades actuales que hace el asistente simplemente pidiéndolas por micrófono son:
+El asistente tiene múltiples funcionalidades que ejecuta cuando las solicitás por micrófono. Estas son:
 
 * Realiza búsquedas en los sitios web que quieras (google, youtube, twitter, etc.), siempre y cuando sean sitios que yo haya configurado previamente.
 
@@ -67,6 +67,6 @@ Estoy abierto a sugerencias!
 * JavaScript
 * [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) - Texto-a-voz y Reconocimiento de voz asíncrono
 
-## Autores ✒️
+## Autor ✒️
 
 * **Alejandro Portaluppi** - [LinkedIn](https://www.linkedin.com/in/alejandro-portaluppi/)
