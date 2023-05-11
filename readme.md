@@ -1,6 +1,8 @@
 # Asistente Virtual en JavaScript
 
-> **Importante**: Este proyecto ya no recibe actualizaciones ya que decidí reemplazarlo por uno mejor hecho con Python, aprovechando la versatilidad y potencial que dicho lenguaje posee. Haz click [aquí](https://github.com/Ale6100/Asistente-Virtual-Python.git) para ver la nueva versión.
+**Importante**: Este proyecto ya no recibe actualizaciones ya que decidí reemplazarlo por uno mejor hecho con Python, aprovechando la versatilidad y potencial que dicho lenguaje posee. Haz click [aquí](https://github.com/Ale6100/Asistente-Virtual-Python.git) para ver la nueva versión.
+
+---
 
 Mi objetivo con este proyecto es lograr que el asistente sea lo suficientemente útil como para que desees utilizarlo a diaro, sabiendo que lo puedes dejar encendido en segundo plano para que esté listo en cualquier momento que lo necesites. 
 
@@ -24,7 +26,7 @@ Mira **Despliegue** para saber cómo desplegar el proyecto en tu computadora y *
 
 ### Pre-requisitos 📋
 
-Necesitas ejecutar el archivo desde un servidor. En caso de que tengas Visual Studio Code puedes utilizar la extensión Live Server.
+Necesitas ejecutar el archivo desde un servidor. En caso de que tengas Visual Studio Code puedes utilizar la extensión [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
 
 ### Instalación 🔧
 

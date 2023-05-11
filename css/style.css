@@ -60,6 +60,21 @@ main {
     padding: 0px 5px;
 }
 
+main > p {
+    margin: 10px 0px;
+    text-align: center;
+}
+
+main > p span {
+    color: rgb(200, 0, 0);
+    font-weight: bold;
+}
+
+main > p a {
+    color: rgb(0, 0, 255);
+    text-decoration: none;
+}
+
 h1 {
     padding-top: 10px;
     text-align: center;
